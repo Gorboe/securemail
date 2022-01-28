@@ -1,7 +1,8 @@
 <template>
   <div>
     HomePage <br/><br/>
-    {{ mailData }}
+    <v-btn v-on:click="getAllMail()">Get Mail</v-btn><br/><br/>
+    {{ mailData }}<br/><br/>
     {{ accessToken }}
   </div>
 </template>
@@ -14,7 +15,10 @@ import authenticationData from '../../../../../auth/client_secret.json';
 export default {
   name: 'index',
   methods: {
-    ...mapActions('$_data', ['fetchData', 'setAccessToken']),
+    ...mapActions('$_data', ['fetchMailData', 'setAccessToken']),
+    getAllMail() {
+      this.fetchMailData(this.accessToken);
+    },
     async getAccessToken() {
       // Get Access Token
       const myHeaders = new Headers();
@@ -52,7 +56,6 @@ export default {
     }
 
     await this.getAccessToken();
-    // await this.fetchData();
   },
 };
 </script>
