@@ -2,8 +2,7 @@ import axios from 'axios';
 
 export default class BaseApiClient {
   constructor() {
-    const baseUrl = 'http://api.openweathermap.org/';
-
+    const baseUrl = 'https://gmail.googleapis.com/gmail/v1/users/me/messages';
     this.axiosInstance = axios.create({
       baseURL: baseUrl,
     });

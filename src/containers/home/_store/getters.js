@@ -1,5 +1,7 @@
-const data = (state) => state.data;
+const mailData = (state) => state.mailData;
+const accessToken = (state) => state.accessToken;
 
 export default {
-  data,
+  mailData,
+  accessToken,
 };
