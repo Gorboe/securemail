@@ -22,7 +22,7 @@ export default {
       .then((response) => response.json())
       .then((result) => {
         console.log(result.messages);
-        for (let i = 0; i < 1; i += 1) { // change 10 with result.messages.length
+        for (let i = 0; i < 10; i += 1) { // change 10 with result.messages.length
           fetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${result.messages[i].id}`, requestOptions)
             .then((response2) => response2.json())
             .then((result2) => messages.push(result2))

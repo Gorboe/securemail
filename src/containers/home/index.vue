@@ -2,8 +2,10 @@
   <div>
     HomePage <br/><br/>
     <v-btn v-on:click="getAllMail()">Get Mail</v-btn><br/><br/>
-    {{ mailData }}<br/><br/>
-    {{ accessToken }}
+    <div v-for="(entry, index) in mailData" :key="index"
+         v-on:click="mailSelected(entry)" class="mail-item">
+      <MailEntry :mailData="entry" />
+    </div>
   </div>
 </template>
 
@@ -11,11 +13,18 @@
 import { mapActions, mapGetters } from 'vuex';
 import store from './_store';
 import authenticationData from '../../../../../auth/client_secret.json';
+import MailEntry from './_components/MailEntry.vue';
 
 export default {
   name: 'index',
+  components: { MailEntry },
   methods: {
     ...mapActions('$_data', ['fetchMailData', 'setAccessToken']),
+    mailSelected(entry) {
+      // TODO: add code for routing to new page and load up selected mail.
+      console.log('test');
+      console.log(entry.snippet);
+    },
     getAllMail() {
       this.fetchMailData(this.accessToken);
     },
@@ -61,5 +70,10 @@ export default {
 </script>
 
 <style scoped>
-
+  .mail-item {
+    cursor: pointer;
+  }
+  .mail-item:hover {
+    background: grey;
+  }
 </style>
