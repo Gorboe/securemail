@@ -1,6 +1,13 @@
 <template>
   <div>
-    From: {{ getSender }} Subject: {{ getSubject }}
+    <v-row>
+      <v-col>
+        From: {{ getSender }}
+      </v-col>
+      <v-col>
+        Subject: {{ getSubject }}
+      </v-col>
+    </v-row>
   </div>
 </template>
 
