@@ -20,25 +20,29 @@ export default {
     ...mapGetters('$_data', ['selectedMail']),
   },
   created() {
-    for (let i = 0; i < this.selectedMail.payload.parts.length; i += 1) {
-      if (this.selectedMail.payload.parts[i].mimeType === 'text/html') {
-        this.htmlData = urlSafeBase64.decode(this.selectedMail.payload.parts[i].body.data);
-      }
+    if (this.selectedMail.payload.parts !== undefined) {
+      for (let i = 0; i < this.selectedMail.payload.parts.length; i += 1) {
+        if (this.selectedMail.payload.parts[i].mimeType === 'text/html') {
+          this.htmlData = urlSafeBase64.decode(this.selectedMail.payload.parts[i].body.data);
+        }
 
-      if (this.selectedMail.payload.parts[i].mimeType === 'application/pdf') {
-        console.log('Has a PDF attachment');
-      }
+        if (this.selectedMail.payload.parts[i].mimeType === 'application/pdf') {
+          console.log('Has a PDF attachment');
+        }
 
-      // Multipart MimeType
-      if (this.selectedMail.payload.parts[i].mimeType === 'multipart/alternative') {
-        for (let j = 0; j < this.selectedMail.payload.parts[i].parts.length; j += 1) {
-          // HTML
-          if (this.selectedMail.payload.parts[i].parts[j].mimeType === 'text/html') {
-            this.htmlData = urlSafeBase64
-              .decode(this.selectedMail.payload.parts[i].parts[j].body.data);
+        // Multipart MimeType
+        if (this.selectedMail.payload.parts[i].mimeType === 'multipart/alternative') {
+          for (let j = 0; j < this.selectedMail.payload.parts[i].parts.length; j += 1) {
+            // HTML
+            if (this.selectedMail.payload.parts[i].parts[j].mimeType === 'text/html') {
+              this.htmlData = urlSafeBase64
+                .decode(this.selectedMail.payload.parts[i].parts[j].body.data);
+            }
           }
         }
       }
+    } else if (this.selectedMail.payload.mimeType === 'text/html') {
+      this.htmlData = urlSafeBase64.decode(this.selectedMail.payload.body.data);
     }
   },
 };
