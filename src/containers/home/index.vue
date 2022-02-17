@@ -6,13 +6,11 @@
          v-on:click="mailSelected(entry)" class="mail-item">
       <MailEntry :mailData="entry" />
     </div>
-    <div v-html="test"></div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import urlSafeBase64 from 'urlsafe-base64';
 import store from './_store';
 import authenticationData from '../../../../../auth/client_secret.json';
 import MailEntry from './_components/MailEntry.vue';
@@ -20,22 +18,11 @@ import MailEntry from './_components/MailEntry.vue';
 export default {
   name: 'index',
   components: { MailEntry },
-  data: () => ({
-    test: '',
-  }),
   methods: {
-    ...mapActions('$_data', ['fetchMailData', 'setAccessToken']),
-    stringToHTML(str) {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(str, 'text/html');
-      this.test = doc.body;
-    },
+    ...mapActions('$_data', ['fetchMailData', 'setAccessToken', 'setSelectedMail']),
     mailSelected(entry) {
-      // TODO: add code for routing to new page and load up selected mail.
-      console.log('test');
-      this.test = urlSafeBase64.decode(entry.payload.parts[1].body.data);
-      console.log(entry.snippet);
-      // this.$router.push({ name: 'InspectMail' });
+      this.setSelectedMail(entry);
+      this.$router.push({ name: 'InspectMail' });
     },
     getAllMail() {
       this.fetchMailData(this.accessToken);

@@ -1,7 +1,8 @@
-import { SET_ACCESS_TOKEN, UPDATE_MAIL_DATA } from './mutations';
+import { SET_ACCESS_TOKEN, UPDATE_MAIL_DATA, SET_SELECTED_MAIL } from './mutations';
 
 export const fetchMailData = 'fetchMailData';
 export const setAccessToken = 'setAccessToken';
+export const setSelectedMail = 'setSelectedMail';
 
 export default {
   // eslint-disable-next-line no-unused-vars
@@ -36,5 +37,8 @@ export default {
   },
   [setAccessToken](context, token) {
     context.commit(SET_ACCESS_TOKEN, token);
+  },
+  [setSelectedMail](context, data) {
+    context.commit(SET_SELECTED_MAIL, data);
   },
 };

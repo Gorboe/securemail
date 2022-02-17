@@ -3,7 +3,7 @@
     <v-app-bar app color="#1a8e88">
       <v-app-bar-nav-icon class="hidden-sm-and-up" @click="drawer = true" />
       <v-toolbar-title class="logo display-1">
-        Test Header
+        Secur-E-mail
       </v-toolbar-title>
     </v-app-bar>
   </section>

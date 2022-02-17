@@ -2,4 +2,5 @@
 export const getBaseState = () => ({
   mailData: [],
   accessToken: null,
+  selectedMail: null,
 });
