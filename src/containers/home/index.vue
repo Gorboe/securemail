@@ -1,6 +1,5 @@
 <template>
   <div>
-    HomePage <br/><br/>
     <v-btn v-on:click="getAllMail()">Get Mail</v-btn><br/><br/>
     <div v-for="(entry, index) in mailData" :key="index"
          v-on:click="mailSelected(entry)" class="mail-item">

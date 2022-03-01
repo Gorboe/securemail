@@ -5,6 +5,9 @@
       <v-toolbar-title class="logo display-1">
         Secur-E-mail
       </v-toolbar-title>
+      <v-toolbar-items>
+        <v-btn v-on:click="sendMailModule()">Send mail</v-btn>
+      </v-toolbar-items>
     </v-app-bar>
   </section>
 </template>
@@ -16,6 +19,9 @@ export default {
     drawer: false,
   }),
   methods: {
+    sendMailModule() {
+      this.$router.push({ name: 'SendMail' });
+    },
   },
 };
 </script>

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="loaded">
+      <AnalyserMenu :htmlData="this.htmlData"/>
+    </div>
     <div v-html="htmlData"></div>
     {{ this.selectedMail }}
   </div>
@@ -8,18 +11,23 @@
 <script>
 import urlSafeBase64 from 'urlsafe-base64';
 import { mapGetters } from 'vuex';
+import AnalyserMenu from './_components/AnalyserMenu.vue';
 
 export default {
   name: 'index',
+  components: {
+    AnalyserMenu,
+  },
   data: () => ({
     htmlData: '',
+    loaded: false,
   }),
   methods: {
   },
   computed: {
     ...mapGetters('$_data', ['selectedMail']),
   },
-  created() {
+  async created() {
     if (this.selectedMail.payload.parts !== undefined) {
       for (let i = 0; i < this.selectedMail.payload.parts.length; i += 1) {
         if (this.selectedMail.payload.parts[i].mimeType === 'text/html') {
@@ -44,6 +52,7 @@ export default {
     } else if (this.selectedMail.payload.mimeType === 'text/html') {
       this.htmlData = urlSafeBase64.decode(this.selectedMail.payload.body.data);
     }
+    this.loaded = true;
   },
 };
 </script>

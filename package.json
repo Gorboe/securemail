@@ -13,6 +13,7 @@
     "core-js": "^3.6.5",
     "urlsafe-base64": "^1.0.0",
     "vue": "^2.6.11",
+    "vue-drag-resize": "^1.5.4",
     "vue-router": "^3.2.0",
     "vue-simple-search-dropdown": "^1.0.1",
     "vue2-datepicker": "^3.10.2",
