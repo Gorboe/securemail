@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-named-as-default
+import getLevenstheinDistance from '../../../utilities/LevenshteinDistance';
+
 export const ADD_SENDER_EMAIL = 'ADD_SENDER_EMAIL';
 
 export default {
@@ -18,16 +21,8 @@ export default {
       // Check if this domain is similar to any of the existing domains
       const splitNewDomain = regexDomain.split('');
       for (let i = 0; i < state.domainRegistry.length; i += 1) {
-        let matchingCharacters = 0;
-        let percentage = 0;
-        const splitDomain = state.domainRegistry[i].domain.split('');
-        for (let j = 0; j < splitNewDomain.length; j += 1) {
-          if (splitNewDomain[j] === splitDomain[j]) {
-            matchingCharacters += 1;
-          }
-        }
-        percentage = (matchingCharacters / splitNewDomain.length) * 100;
-        console.log(`'${regexDomain}' has a ${percentage}% similarity with '${state.domainRegistry[i].domain}'`);
+        const distance = getLevenstheinDistance(splitNewDomain, state.domainRegistry[i].domain.split(''));
+        console.log(`Distance between ${regexDomain} and ${state.domainRegistry[i].domain} is: ${distance}`);
       }
 
       // New domains needs to be added (Maybe add logic to not include suspicious domains?)
