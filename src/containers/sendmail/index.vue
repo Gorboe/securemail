@@ -12,7 +12,7 @@
     </div>
     <div>
       <div v-for="(entry, index) in this.getSenderEmails" :key="index" class="mail-item">
-        {{ entry.emailAddress }}
+        {{ entry.emailAddress }} <b>{{ entry.warning }}</b>
       </div>
     </div>
     <div class="filler">
