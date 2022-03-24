@@ -15,7 +15,7 @@
     </div>
     <div>
       <div v-for="(entry, index) in this.getSenderEmails" :key="index" class="mail-item">
-        {{ entry.emailAddress }} <b>{{ entry.warning }}</b>
+        {{ entry.emailAddress }} <b>{{ entry.warning }}</b><v-icon>mdi-logout</v-icon>
       </div>
     </div>
     <div class="filler">
