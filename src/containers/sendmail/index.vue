@@ -14,8 +14,18 @@
       <h1>Inbox</h1>
     </div>
     <div>
-      <div v-for="(entry, index) in this.getSenderEmails" :key="index" class="mail-item">
-        {{ entry.emailAddress }} <b>{{ entry.warning }}</b><v-icon>mdi-logout</v-icon>
+      <div v-for="(entry, index) in this.getSenderEmails" :key="index" class="mail-item"
+           v-on:click="test(entry)">
+        {{ entry.emailAddress }} <b>{{ entry.warning }}</b>
+        <div v-if="entry.trust === 'yellow'" class="inline">
+          <v-icon style="color: yellow;">mdi-alert</v-icon>
+        </div>
+        <div v-else-if="entry.trust === 'red'" class="inline">
+          <v-icon style="color: red;">mdi-close-octagon</v-icon>
+        </div>
+        <div v-else-if="entry.trust === 'green'" class="inline">
+          <v-icon style="color: green;">mdi-thumb-up</v-icon>
+        </div>
       </div>
     </div>
     <div class="filler">
@@ -45,6 +55,9 @@ export default {
     ...mapActions('$_sendmail', ['commitAddSenderEmail']),
     sendMail() {
       this.commitAddSenderEmail(this.senderEmail);
+    },
+    test(entry) {
+      console.log(entry);
     },
   },
   async created() {
@@ -78,5 +91,8 @@ export default {
   }
   .mail-item:hover {
     background: grey;
+  }
+  .inline {
+    display: inline;
   }
 </style>

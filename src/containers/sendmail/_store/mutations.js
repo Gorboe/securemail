@@ -17,6 +17,7 @@ export default {
       }
     }
     let isTrusted = true;
+    let trust = 'green';
     let warning = '';
     if (newDomain) {
       // Check if this domain is similar to any of the existing domains
@@ -27,9 +28,11 @@ export default {
 
         if (distance === 1) {
           isTrusted = false;
+          trust = 'yellow';
           warning += `This is very equal to the domain '${state.domainRegistry[i].domain}', we found only one alteration. `;
         } else if (distance === 2) {
           isTrusted = false;
+          trust = 'yellow';
           warning += `This is very equal to the domain '${state.domainRegistry[i].domain}', we found only two alteration. `;
         }
 
@@ -81,6 +84,7 @@ export default {
         if (effectiveDistance === 0) {
           warning += 'The effective distance is 0, this is likely a targeted attack, do not open. ';
           isTrusted = false;
+          trust = 'red';
         } else if (effectiveDistance > 2) {
           // TODO: Temporary solution for ignoring entries that are not equal enough
           warning = '';
@@ -105,7 +109,7 @@ export default {
     }
 
     // Add email entry to your inbox
-    const entry = { emailAddress: email, warning };
+    const entry = { emailAddress: email, warning, trust };
     state.senderEmails.unshift(entry); // unshift adds the entry to the start of the array
   },
 };
