@@ -13,6 +13,15 @@
     <div>
       <div v-for="(entry, index) in this.getSenderEmails" :key="index" class="mail-item">
         {{ entry.emailAddress }} <b>{{ entry.warning }}</b>
+        <div v-for="(swap, index) in entry.swapPositions" :key="index"
+             style="text-align: left; padding-left: 5vh;">
+          <div v-if="swap.flagged === false">
+            {{ swap.domain }} ----- {{ swap.newDomain }}
+          </div>
+          <div v-else style="color: red;">
+            {{ swap.domain }} ----- {{ swap.newDomain }} {{ swap.warning }}
+          </div>
+        </div>
       </div>
     </div>
     <div class="filler">
