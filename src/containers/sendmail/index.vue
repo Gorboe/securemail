@@ -1,27 +1,21 @@
 <template>
   <div>
-    <v-text-field
-            label="Sender Email"
-            v-model="senderEmail"
-            rounded
-            filled
-            hide-details></v-text-field>
-    <v-btn v-on:click="sendMail()">Send Mail</v-btn>
+    <div class="padding">
+      Enter a sender address here and press the 'send email' button.
+      <v-text-field
+              label="Sender Email"
+              v-model="senderEmail"
+              rounded
+              filled
+              hide-details></v-text-field>
+      <v-btn v-on:click="sendMail()" dark large class="margin">Send Mail</v-btn>
+    </div>
     <div class="filler">
       <h1>Inbox</h1>
     </div>
     <div>
       <div v-for="(entry, index) in this.getSenderEmails" :key="index" class="mail-item">
         {{ entry.emailAddress }} <b>{{ entry.warning }}</b>
-        <div v-for="(swap, index) in entry.swapPositions" :key="index"
-             style="text-align: left; padding-left: 5vh;">
-          <div v-if="swap.flagged === false">
-            {{ swap.domain }} ----- {{ swap.newDomain }}
-          </div>
-          <div v-else style="color: red;">
-            {{ swap.domain }} ----- {{ swap.newDomain }} {{ swap.warning }}
-          </div>
-        </div>
       </div>
     </div>
     <div class="filler">
@@ -64,6 +58,12 @@ export default {
 </script>
 
 <style>
+  .margin {
+    margin-top: 2vh;
+  }
+  .padding {
+    padding: 2vh;
+  }
   .filler {
     padding-top: 1.5em;
     padding-bottom: 1.5em;

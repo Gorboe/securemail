@@ -1,12 +1,12 @@
 <template>
   <section>
-    <v-app-bar app color="#1a8e88">
+    <v-app-bar app color="#203e5f">
       <v-app-bar-nav-icon class="hidden-sm-and-up" @click="drawer = true" />
       <v-toolbar-title class="logo display-1">
-        Secur-E-mail
+        SecurEmail
       </v-toolbar-title>
       <v-toolbar-items>
-        <v-btn v-on:click="sendMailModule()">Send mail</v-btn>
+        <v-btn v-on:click="sendMailModule()" text link>Send mail module</v-btn>
       </v-toolbar-items>
     </v-app-bar>
   </section>
