@@ -15,8 +15,8 @@
     </div>
     <div>
       <div v-for="(entry, index) in this.getSenderEmails" :key="index" class="mail-item"
-           v-on:click="test(entry)">
-        {{ entry.emailAddress }} <b>{{ entry.warning }}</b>
+           v-on:click="showMail(entry)">
+        {{ entry.emailAddress }}
         <div v-if="entry.trust === 'yellow'" class="inline">
           <v-icon style="color: yellow;">mdi-alert</v-icon>
         </div>
@@ -56,8 +56,8 @@ export default {
     sendMail() {
       this.commitAddSenderEmail(this.senderEmail);
     },
-    test(entry) {
-      console.log(entry);
+    showMail(entry) {
+      this.$router.push({ name: 'ShowMail', params: { data: entry } });
     },
   },
   async created() {

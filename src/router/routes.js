@@ -1,6 +1,7 @@
 import Home from '../containers/home/index.vue';
 import InspectMail from '../containers/inspectmail/index.vue';
 import SendMail from '../containers/sendmail/index.vue';
+import ShowMail from '../containers/showmail/index.vue';
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: '/sendmail',
     name: 'SendMail',
     component: SendMail,
+  },
+  {
+    path: '/showmail',
+    name: 'ShowMail',
+    component: ShowMail,
   },
 ];
 

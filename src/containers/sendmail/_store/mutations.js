@@ -33,7 +33,7 @@ export default {
         } else if (distance === 2) {
           isTrusted = false;
           trust = 'yellow';
-          warning += `This is very equal to the domain '${state.domainRegistry[i].domain}', we found only two alteration. `;
+          warning += `This is very equal to the domain '${state.domainRegistry[i].domain}', we found only two alterations. `;
         }
 
         // Check for common alterations between characters.
@@ -82,12 +82,9 @@ export default {
 
         // Check the effective distance
         if (effectiveDistance === 0) {
-          warning += 'The effective distance is 0, this is likely a targeted attack, do not open. ';
+          warning += 'The effective distance is 0, this is likely a targeted attack, do not interact with this email. ';
           isTrusted = false;
           trust = 'red';
-        } else if (effectiveDistance > 2) {
-          // TODO: Temporary solution for ignoring entries that are not equal enough
-          warning = '';
         }
 
         // Check homograph attacks (character codes)
