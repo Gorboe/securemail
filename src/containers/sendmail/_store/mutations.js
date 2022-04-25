@@ -19,6 +19,9 @@ export default {
     let isTrusted = true;
     let trust = 'green';
     let warning = '';
+    const positionsNew = [];
+    const positionsOld = [];
+    let existingDomain = '';
     if (newDomain) {
       // Check if this domain is similar to any of the existing domains
       const splitNewDomain = regexDomain.split('');
@@ -47,6 +50,10 @@ export default {
             if (splitNewDomain[j + adjuster] === 'n') {
               warning += `In position ${j + 1 + adjuster} we found n instead of m. `;
               effectiveDistance -= 1;
+              // add the positions
+              positionsNew.push(j);
+              positionsOld.push(j + adjuster);
+              existingDomain = state.domainRegistry[i].domain;
             }
             // check for m to rn
             if (splitNewDomain[j + adjuster] === 'r' && splitNewDomain[j + 1 + adjuster] === 'n') {
@@ -79,12 +86,16 @@ export default {
             }
           }
         }
-
+        // TODO: add for i vs j
         // Check the effective distance
         if (effectiveDistance === 0) {
           warning += 'The effective distance is 0, this is likely a targeted attack, do not interact with this email. ';
           isTrusted = false;
           trust = 'red';
+        } else if (effectiveDistance === 1) {
+          warning += 'The effective distance is 1, this could be a targeted attack.';
+          isTrusted = false;
+          trust = 'yellow';
         }
 
         // Check homograph attacks (character codes)
@@ -106,7 +117,15 @@ export default {
     }
 
     // Add email entry to your inbox
-    const entry = { emailAddress: email, warning, trust };
+    const entry = {
+      emailAddress: email,
+      warning,
+      trust,
+      positionsNew,
+      positionsOld,
+      newDomain: regexDomain,
+      existingDomain,
+    };
     state.senderEmails.unshift(entry); // unshift adds the entry to the start of the array
   },
 };

@@ -12,7 +12,9 @@
       <v-row>
         <v-col class="background-red">
           <h2>Danger!</h2>
-          {{ warning }}
+          {{ warning }}<br/><br/>
+          The new domain '{{ newDomain }}' is quite similar to the existing trusted domain
+          '{{ existingDomain }}'. <div v-html="htmlData"></div>
         </v-col>
       </v-row>
     </div>
@@ -22,9 +24,49 @@
 <script>
 export default {
   name: 'WarningMessage',
+  data: () => ({
+    htmlData: '',
+  }),
   props: {
     trust: String,
     warning: String,
+    positionsNew: Array,
+    positionsOld: Array,
+    newDomain: String,
+    existingDomain: String,
+  },
+  created() {
+    const splitNewDomain = this.newDomain.split('');
+    let newString = '';
+    let isAdded = false;
+    for (let i = 0; i < splitNewDomain.length; i += 1) {
+      isAdded = false;
+      for (let j = 0; j < this.positionsNew.length; j += 1) {
+        if (i === this.positionsNew[j]) {
+          newString += `<b>${splitNewDomain[i]}</b>`;
+          isAdded = true;
+        }
+      }
+      if (!isAdded) {
+        newString += `${splitNewDomain[i]}`;
+      }
+    }
+
+    const splitExistingDomain = this.existingDomain.split('');
+    let existingString = '';
+    for (let i = 0; i < splitExistingDomain.length; i += 1) {
+      isAdded = false;
+      for (let j = 0; j < this.positionsOld.length; j += 1) {
+        if (i === this.positionsOld[j]) {
+          existingString += `<b>${splitExistingDomain[i]}</b>`;
+          isAdded = true;
+        }
+      }
+      if (!isAdded) {
+        existingString += `${splitExistingDomain[i]}`;
+      }
+    }
+    this.htmlData = `${existingString} vs ${newString}`;
   },
 };
 </script>
