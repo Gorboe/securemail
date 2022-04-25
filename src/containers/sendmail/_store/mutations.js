@@ -19,8 +19,8 @@ export default {
     let isTrusted = true;
     let trust = 'green';
     let warning = '';
-    const positionsNew = [];
-    const positionsOld = [];
+    let positionsNew = [];
+    let positionsOld = [];
     let existingDomain = '';
     if (newDomain) {
       // Check if this domain is similar to any of the existing domains
@@ -51,14 +51,19 @@ export default {
               warning += `In position ${j + 1 + adjuster} we found n instead of m. `;
               effectiveDistance -= 1;
               // add the positions
-              positionsNew.push(j);
-              positionsOld.push(j + adjuster);
+              positionsNew.push(j + adjuster);
+              positionsOld.push(j);
               existingDomain = state.domainRegistry[i].domain;
             }
             // check for m to rn
             if (splitNewDomain[j + adjuster] === 'r' && splitNewDomain[j + 1 + adjuster] === 'n') {
               if ((j + 1) < domain.length) {
                 warning += `In position ${j + 1 + adjuster} and ${j + 2 + adjuster} we found that the m is swapped with r and n in sequence. `;
+                // add the positions
+                positionsNew.push(adjuster + j, adjuster + j + 1);
+                positionsOld.push(j);
+                existingDomain = state.domainRegistry[i].domain;
+                // Adjust
                 adjuster += 1;
                 effectiveDistance -= 2;
               }
@@ -69,6 +74,10 @@ export default {
             if (splitNewDomain[j + adjuster] === 'm') {
               warning += `In position ${j + 1 + adjuster} we found m instead of n. `;
               effectiveDistance -= 1;
+              // add the positions
+              positionsNew.push(j + adjuster);
+              positionsOld.push(j);
+              existingDomain = state.domainRegistry[i].domain;
             }
           }
           // check for small L
@@ -76,6 +85,10 @@ export default {
             if (splitNewDomain[j + adjuster] === 'I') {
               warning += `In position ${j + 1 + adjuster} we found large i instead of small L. `;
               effectiveDistance -= 1;
+              // add the positions
+              positionsNew.push(j + adjuster);
+              positionsOld.push(j);
+              existingDomain = state.domainRegistry[i].domain;
             }
           }
           // check for big i
@@ -83,6 +96,10 @@ export default {
             if (splitNewDomain[j + adjuster] === 'l') {
               warning += `In position ${j + 1 + adjuster} we found small L instead of large i. `;
               effectiveDistance -= 1;
+              // add the positions
+              positionsNew.push(j + adjuster);
+              positionsOld.push(j);
+              existingDomain = state.domainRegistry[i].domain;
             }
           }
         }
@@ -106,6 +123,14 @@ export default {
             looks to be a character you know it is likely a scam.`;
             isTrusted = false;
           }
+        }
+        if (isTrusted) {
+          positionsNew = [];
+          positionsOld = [];
+          warning = '';
+        } else {
+          // if it is not trusted, we dont need to check it against the remaining trusted domains.
+          break;
         }
       }
 
