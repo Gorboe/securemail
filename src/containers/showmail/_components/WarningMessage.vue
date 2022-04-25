@@ -12,9 +12,17 @@
       <v-row>
         <v-col class="background-red">
           <h2>Danger!</h2>
-          {{ warning }}<br/><br/>
           The new domain '{{ newDomain }}' is quite similar to the existing trusted domain
           '{{ existingDomain }}'. <div v-html="htmlData"></div>
+          <div v-if="seeMore">
+            <br/>{{ warning }}
+          </div>
+          <div style="text-align: center;" v-if="!seeMore">
+            <v-icon v-on:click="expand()">mdi-arrow-down</v-icon>
+          </div>
+          <div style="text-align: center;" v-if="seeMore">
+            <v-icon v-on:click="expand()">mdi-arrow-up</v-icon>
+          </div>
         </v-col>
       </v-row>
     </div>
@@ -26,6 +34,7 @@ export default {
   name: 'WarningMessage',
   data: () => ({
     htmlData: '',
+    seeMore: false,
   }),
   props: {
     trust: String,
@@ -34,6 +43,11 @@ export default {
     positionsOld: Array,
     newDomain: String,
     existingDomain: String,
+  },
+  methods: {
+    expand() {
+      this.seeMore = !this.seeMore;
+    },
   },
   created() {
     const splitNewDomain = this.newDomain.split('');
