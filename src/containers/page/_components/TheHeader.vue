@@ -6,7 +6,7 @@
         SecurEmail
       </v-toolbar-title>
       <v-toolbar-items>
-        <v-btn v-on:click="sendMailModule()" text link>Send mail module</v-btn>
+        <!--<v-btn v-on:click="sendMailModule()" text link>Send mail module</v-btn>-->
       </v-toolbar-items>
     </v-app-bar>
   </section>

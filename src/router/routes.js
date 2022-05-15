@@ -1,4 +1,4 @@
-import Home from '../containers/home/index.vue';
+// import Home from '../containers/home/index.vue';
 import InspectMail from '../containers/inspectmail/index.vue';
 import SendMail from '../containers/sendmail/index.vue';
 import ShowMail from '../containers/showmail/index.vue';
@@ -6,8 +6,8 @@ import ShowMail from '../containers/showmail/index.vue';
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'SendMail',
+    component: SendMail,
     meta: { scrollToTop: true },
   },
   {

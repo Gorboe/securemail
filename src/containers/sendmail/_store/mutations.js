@@ -7,7 +7,7 @@ export default {
   [ADD_SENDER_EMAIL](state, email) {
     // Regex for extracting domain name from email
     const regexDomain = /(?:[a-zA-Z0-9]+@)([a-zA-Z0-9\W]+)(?:.[a-z]{2,3})/g.exec(email)[1].slice(0, -1);
-
+    const dateTimeFirst = Date.now();
     // Check the domain name against the domain registry, if existing add to amount
     let newDomain = true;
     for (let i = 0; i < state.domainRegistry.length; i += 1) {
@@ -28,7 +28,6 @@ export default {
       for (let i = 0; i < state.domainRegistry.length; i += 1) {
         const distance = getLevenstheinDistance(splitNewDomain, state.domainRegistry[i].domain.split(''));
         let effectiveDistance = distance;
-
         if (distance === 1) {
           isTrusted = false;
           trust = 'yellow';
@@ -43,7 +42,6 @@ export default {
         const domain = state.domainRegistry[i].domain.split('');
         let adjuster = 0;
         for (let j = 0; j < domain.length; j += 1) {
-          console.log(domain.length);
           // check for m
           if (domain[j] === 'm') {
             // check for m to n
@@ -117,11 +115,10 @@ export default {
 
         // Check homograph attacks (character codes)
         for (let j = 0; j < regexDomain.length; j += 1) {
-          console.log(regexDomain.toString().charCodeAt(j));
           if (regexDomain.toString().charCodeAt(j) > 126) {
-            warning += `Character in position ${j + 1} is not an ASCII character. If the '${regexDomain.split('')[j]}' 
-            looks to be a character you know it is likely a scam.`;
+            warning += `Character in position ${j + 1} in new domain '${regexDomain}' is not an ASCII character. The character: ${regexDomain.split('')[j]}`;
             isTrusted = false;
+            trust = 'yellow';
           }
         }
         if (isTrusted) {
@@ -140,7 +137,10 @@ export default {
         state.domainRegistry.push(domainEntry);
       }
     }
-
+    const dateTimeAfter = Date.now();
+    console.log(dateTimeFirst);
+    console.log(dateTimeAfter);
+    console.log(dateTimeAfter - dateTimeFirst);
     // Add email entry to your inbox
     const entry = {
       emailAddress: email,

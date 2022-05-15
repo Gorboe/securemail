@@ -28,6 +28,6 @@ export default function getLevenstheinDistance(string1, string2) {
       }
     }
   }
-  console.log(matrix);
+  // console.log(matrix);
   return matrix[string1.length][string2.length];
 }
